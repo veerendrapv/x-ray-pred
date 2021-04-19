@@ -1,4 +1,2 @@
 flask
-torch
-torchvision
 scikit-image

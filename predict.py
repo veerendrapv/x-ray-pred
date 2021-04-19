@@ -1,26 +1,27 @@
 def predict(model_path, image_path):
+    from torchvision import transforms
     from torch import nn
     import torch
-#     import cv2
-    import numpy as np
-    from skimage import io, transform
+    from PIL import Image
+
     index_to_name = {0:'Covid', 1:'Normal', 2:'Viral Pnuemonia'}
     criterion = nn.CrossEntropyLoss()
-    
     if torch.cuda.is_available():
         device = 'cuda'
     else:
         device = 'cpu'
-    image = io.imread(image_path)
-    image = np.float32(transform.resize(image, (224, 224))) / 255
-    means = np.array([0.485, 0.456, 0.406])
-    stds = np.array([0.229, 0.224, 0.225])
-    image -= means
-    image /= stds
-    image = np.ascontiguousarray(np.transpose(image, (2, 0, 1)))  # channel first
-    image = image[np.newaxis, ...]  
     model_eval = torch.load(model_path, map_location=device)
-    image = torch.tensor(image)
+
+    # open method used to open different extension image file
+    im = Image.open(image_path) 
+    transform = transforms.Compose([
+                                transforms.Resize(255),
+                                transforms.CenterCrop(224),
+                                transforms.ToTensor(),
+                                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+                               ])
+
+    image = transform(im).unsqueeze(0)
     with torch.no_grad():
         image = image.to(device)
         model_eval = model_eval.to(device)

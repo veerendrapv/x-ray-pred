@@ -1,0 +1,14 @@
+<html>
+   <body>
+      {% if result %}
+      <img src="{{ url_for('static', filename=image) }}" alt="x-ray"></img>
+      <h1> chest x-ray image is predicted as {{result}}</h1>
+      {% endif %}
+      
+      <form action = "http://localhost:5000/predict" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form>   
+   </body>
+</html>

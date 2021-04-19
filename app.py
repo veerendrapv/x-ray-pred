@@ -29,4 +29,4 @@ def prediction():
     return render_template("upload.html", result=result, image=img)
 
 if __name__ == '__main__':
-    app.run(debug=False,port=os.getenv('PORT',5000))
+    app.run()

@@ -5,7 +5,7 @@
       <h1> chest x-ray image is predicted as {{result}}</h1>
       {% endif %}
       
-      <form action = "http://localhost:5000/predict" method = "POST" 
+      <form action = "/predict" method = "POST" 
          enctype = "multipart/form-data">
          <input type = "file" name = "file" />
          <input type = "submit"/>

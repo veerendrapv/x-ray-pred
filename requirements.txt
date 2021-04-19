@@ -4,6 +4,5 @@ torchvision==0.9.1+cpu
 gunicorn
 flask
 scikit-image
-opencv-python
 numpy
 
